@@ -3,25 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Dayana</title>
+    <title>Flores para Dayana</title>
     <style>
-        body { background-color: #fce4ec; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; }
-        .envelope { width: 280px; height: 180px; background: #ef5350; position: relative; cursor: pointer; transition: 0.5s; }
-        .envelope:before { content: ""; position: absolute; top: 0; z-index: 2; border-left: 140px solid transparent; border-right: 140px solid transparent; border-top: 90px solid #e57373; transform-origin: top; transition: 0.5s; }
-        .letter { position: absolute; top: 5px; left: 10px; width: 260px; transition: 0.5s; z-index: 1; opacity: 0; }
-        .letter img { width: 100%; border-radius: 5px; }
-        .open:before { transform: rotateX(180deg); z-index: 0; }
-        .open .letter { transform: translateY(-100px); z-index: 3; opacity: 1; }
-        .tap { position: absolute; bottom: 15%; color: #c62828; font-family: sans-serif; font-size: 14px; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+        body { margin: 0; background: #000; overflow: hidden; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        #stars { position: absolute; width: 100%; height: 100%; background: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px); background-size: 100px 100px; z-index: 0; opacity: 0.5; }
+        .main-container { text-align: center; z-index: 1; }
+        h1 { color: #ffeb3b; text-shadow: 0 0 15px #ffeb3b; font-size: 25px; margin-bottom: 20px; }
+        .sunflower { width: 150px; cursor: pointer; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); filter: drop-shadow(0 0 5px #ffeb3b); } 50% { transform: scale(1.1); filter: drop-shadow(0 0 20px #ffeb3b); } 100% { transform: scale(1); filter: drop-shadow(0 0 5px #ffeb3b); } }
+        #garden { display: none; position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 2; background: #000; }
+        .flower-item { position: absolute; text-align: center; animation: float 3s infinite alternate ease-in-out; }
+        .flower-item img { width: 60px; }
+        .flower-text { color: white; font-size: 10px; margin-top: 5px; text-shadow: 0 0 5px #fff; width: 80px; }
+        @keyframes float { from { transform: translateY(0); } to { transform: translateY(-10px); } }
     </style>
 </head>
 <body>
-    <div class="tap">Toca el sobre, Dayana ❤️</div>
-    <div class="envelope" onclick="this.classList.toggle('open')">
-        <div class="letter">
-            <img src="carta.jpg">
-        </div>
+    <div id="stars"></div>
+    <div class="main-container" id="start-screen">
+        <h1>Para Dayana ❤️</h1>
+        <img src="https://static.wixstatic.com/media/2ccac3_b45a0b76e5d84713a52e04e902b4d32f~mv2.png/v1/fill/w_440,h_440,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Girasol%20grande.png" class="sunflower" onclick="showGarden()">
+        <p style="color: #ffeb3b; margin-top: 15px;">Toca para iniciar</p>
     </div>
+
+    <div id="garden">
+        <h1 style="margin-top: 30px;">Eres pura alegría ✨</h1>
+    </div>
+
+    <script>
+        const flowerImgs = [
+            "https://img1.picmix.com/output/pic/normal/3/7/2/6/10296273_24d9f.png", // Rosa
+            "https://static.wixstatic.com/media/2ccac3_b45a0b76e5d84713a52e04e902b4d32f~mv2.png/v1/fill/w_440,h_440,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Girasol%20grande.png", // Girasol
+            "https://img1.picmix.com/output/pic/normal/4/0/1/4/10414104_f1b34.png" // Tulipán
+        ];
+        const phrases = ["Mi flor favorita", "Eres única", "TQM Dayana", "Pura luz", "Feliz día", "Te amo mucho", "Mi prioridad", "Siempre juntos"];
+
+        function showGarden() {
+            document.getElementById('start-screen').style.display = 'none';
+            const garden = document.getElementById('garden');
+            garden.style.display = 'block';
+
+            for (let i = 0; i < 15; i++) {
+                const item = document.createElement('div');
+                item.className = 'flower-item';
+                item.style.left = Math.random() * 80 + 10 + "%";
+                item.style.top = Math.random() * 70 + 15 + "%";
+                
+                const img = document.createElement('img');
+                img.src = flowerImgs[Math.floor(Math.random() * flowerImgs.length)];
+                
+                const txt = document.createElement('div');
+                txt.className = 'flower-text';
+                txt.innerText = phrases[Math.floor(Math.random() * phrases.length)];
+                
+                item.appendChild(img);
+                item.appendChild(txt);
+                garden.appendChild(item);
+            }
+        }
+    </script>
 </body>
 </html>
