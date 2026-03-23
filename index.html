@@ -3,81 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Dayana - Un Jardín para Ti</title>
+    <title>Flores para Dayana</title>
     <style>
-        body { margin: 0; padding: 0; background-color: #000; overflow: hidden; font-family: 'Courier New', Courier, monospace; color: white; text-align: center; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        #stars { position: absolute; width: 100%; height: 100%; background-image: 
-            radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px),
-            radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px),
-            radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 3px);
-          background-size: 550px 550px, 350px 350px, 250px 250px;
-          background-position: 0 0, 40px 60px, 130px 270px;
-          z-index: 0; }
-        h1 { position: relative; font-size: 1.8rem; text-shadow: 0 0 10px #ffeb3b; z-index: 2; color: #ffeb3b; }
-        .intro-text { position: relative; font-size: 1rem; color: #fce4ec; z-index: 2; margin-top: 20px; text-shadow: 0 0 5px #f48fb1; }
-        #initial-sunflower { position: relative; width: 150px; cursor: pointer; z-index: 2; margin-top: 30px; animation: glow 2s infinite alternate; }
-        @keyframes glow { from { box-shadow: 0 0 10px #ffc107; } to { box-shadow: 0 0 25px #ffeb3b; } }
-        #garden-container { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
-        .flower-cluster { position: absolute; display: flex; flex-direction: column; align-items: center; transform: translate(-50%, -50%); cursor: help; }
-        .flower-cluster img { max-width: 60px; height: auto; }
-        .flower-text { font-size: 0.8rem; text-align: center; color: #fff3e0; opacity: 0; transition: opacity 0.5s; text-shadow: 0 0 5px #000; background-color: rgba(0,0,0,0.4); padding: 3px; border-radius: 5px; }
-        .flower-cluster:hover .flower-text { opacity: 1; }
-        @keyframes drift { from { transform: translate(-50%, -50%) translate(-10px, -10px); } to { transform: translate(-50%, -50%) translate(10px, 10px); } }
+        body { margin: 0; background: #000; overflow: hidden; font-family: 'Arial', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        #stars { position: absolute; width: 100%; height: 100%; background: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px); background-size: 100px 100px; z-index: 0; opacity: 0.3; }
+        .main-container { text-align: center; z-index: 1; }
+        h1 { color: #ffd700; text-shadow: 0 0 15px #ffd700; font-size: 26px; margin-bottom: 20px; }
+        .sunflower-btn { width: 140px; cursor: pointer; animation: pulse 2s infinite; filter: drop-shadow(0 0 10px #ffdb58); }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        
+        #garden { display: none; position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 2; background: #000; }
+        .flower-box { position: absolute; text-align: center; animation: float 5s infinite alternate ease-in-out; }
+        .flower-box img { width: 80px; filter: drop-shadow(0 0 8px rgba(255,255,255,0.5)); }
+        .phrase { color: #fff; font-size: 11px; margin-top: 5px; text-shadow: 0 0 5px #000; background: rgba(0,0,0,0.5); padding: 2px 5px; border-radius: 5px; font-weight: bold; }
+        @keyframes float { from { transform: translate(0, 0) rotate(-5deg); } to { transform: translate(10px, -20px) rotate(5deg); } }
+        .final-title { color: #ffeb3b; position: absolute; top: 20px; width: 100%; text-align: center; font-size: 20px; text-shadow: 0 0 10px #000; }
     </style>
 </head>
 <body>
     <div id="stars"></div>
-    <div id="main-scene">
+    
+    <div class="main-container" id="start-screen">
         <h1>Para Dayana ❤️</h1>
-        <div class="intro-text">Para todas las chicas que no han recibido sus flores...</div>
-        <img id="initial-sunflower" src="https://static.wixstatic.com/media/2ccac3_b45a0b76e5d84713a52e04e902b4d32f~mv2.png/v1/fill/w_440,h_440,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Girasol%20grande.png" alt="Girasol central" onclick="startGarden()">
+        <img src="https://www.pngmart.com/files/1/Sunflower-PNG-Transparent-Image.png" class="sunflower-btn" onclick="openGarden()">
+        <p style="color: #ffeb3b; margin-top: 15px;">Toca para iniciar</p>
     </div>
-    <div id="garden-container">
-        <h1>Este jardín virtual es solo para ti</h1>
+
+    <div id="garden">
+        <h1 class="final-title">Un jardín infinito para ti ✨</h1>
     </div>
+
     <script>
-        const sunflower_image = "https://static.wixstatic.com/media/2ccac3_b45a0b76e5d84713a52e04e902b4d32f~mv2.png/v1/fill/w_440,h_440,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Girasol%20grande.png";
-        const rose_image = "https://img1.picmix.com/output/pic/normal/3/7/2/6/10296273_24d9f.png"; // Rosa roja
-        const lily_image = "https://w7.pngwing.com/pngs/351/319/png-transparent-lily-lilia-white-lily-miscellaneous-white-flower-arrangement.png"; // Lirio blanco
-        const tulip_image = "https://img1.picmix.com/output/pic/normal/4/0/1/4/10414104_f1b34.png"; // Tulipán rosa
-        const orchid_image = "https://w7.pngwing.com/pngs/998/182/png-transparent-phalaenopsis-equestris-orchid-orchidee-flower-moth-orchids-orchis.png"; // Orquídea
-        const bouquet_image = "https://pngimg.com/uploads/rose/rose_PNG1002.png"; // Ramo de flores
-        const messages = [
-            { text: "Mi flor favorita eres tú", img: sunflower_image },
-            { text: "Contigo soy muy feliz", img: rose_image },
-            { text: "Eres pura alegría, de verdad", img: lily_image },
-            { text: "Me encanta verte sonreír", img: tulip_image },
-            { text: "Tu compañía es lo mejor", img: bouquet_image },
-            { text: "Gracias por estar en mi vida", img: orchid_image },
-            { text: "Todo se solucionó y eso me hace feliz", img: sunflower_image },
-            { text: "Te amo mucho, Dayana", img: rose_image },
-            { text: "Este jardín es solo para ti ❤️", img: bouquet_image },
-            { text: "Eres única, recuérdalo siempre", img: tulip_image },
-            { text: "Eres mi prioridad, TQM", img: orchid_image }
+        // Enlaces directos que funcionan (Girasol, Rosa roja, Tulipán, Margarita)
+        const flowerImgs = [
+            "https://www.pngmart.com/files/1/Sunflower-PNG-Transparent-Image.png",
+            "https://www.pngmart.com/files/1/Red-Rose-PNG-Transparent-Image.png",
+            "https://www.pngmart.com/files/21/Pink-Tulip-PNG-Clipart.png",
+            "https://www.pngmart.com/files/1/Daisy-Flower-PNG-File.png"
         ];
-        function startGarden() {
-            document.getElementById('main-scene').style.display = 'none';
-            document.getElementById('garden-container').style.display = 'block';
-            const container = document.getElementById('garden-container');
-            for (let i = 0; i < messages.length; i++) {
-                const cluster = document.createElement('div');
-                cluster.className = 'flower-cluster';
-                cluster.style.top = `${Math.random() * 80 + 10}%`;
-                cluster.style.left = `${Math.random() * 80 + 10}%`;
-                cluster.style.animation = `drift ${Math.random() * 4 + 3}s infinite alternate ease-in-out`;
+        
+        const messages = [
+            "Mi flor favorita", "Eres única", "TQM Dayana", "Pura alegría", 
+            "Brillas mucho", "Te extraño", "Siempre juntos", "Mi niña linda",
+            "Eres especial", "Perdón por lo de hoy", "Te quiero mucho", "Eres luz"
+        ];
+
+        function openGarden() {
+            document.getElementById('start-screen').style.display = 'none';
+            const garden = document.getElementById('garden');
+            garden.style.display = 'block';
+
+            // Crear 15 flores aleatorias
+            for (let i = 0; i < 15; i++) {
+                const box = document.createElement('div');
+                box.className = 'flower-box';
+                box.style.left = Math.random() * 80 + 5 + "%";
+                box.style.top = Math.random() * 80 + 10 + "%";
+                box.style.animationDelay = Math.random() * 3 + "s";
+                
                 const img = document.createElement('img');
-                img.src = messages[i].img;
-                img.alt = "Flor";
-                const text = document.createElement('div');
-                text.className = 'flower-text';
-                text.textContent = messages[i].text;
-                cluster.appendChild(img);
-                cluster.appendChild(text);
-                container.appendChild(cluster);
+                img.src = flowerImgs[Math.floor(Math.random() * flowerImgs.length)];
+                
+                const txt = document.createElement('div');
+                txt.className = 'phrase';
+                txt.innerText = messages[Math.floor(Math.random() * messages.length)];
+                
+                box.appendChild(img);
+                box.appendChild(txt);
+                garden.appendChild(box);
             }
         }
-    </style>
-</head>
-<body>
+    </script>
 </body>
-        </html>
+</html>
